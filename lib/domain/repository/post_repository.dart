@@ -5,4 +5,9 @@ abstract class PostRepository {
   Future<DataState<List<Post>>> getPosts();
 
   Future<DataState<Post>> getDetailPost({required int id});
+
+  Future<List<Post>> findPostsByName({
+    required List<Post> listPost,
+    required String name,
+  });
 }

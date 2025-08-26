@@ -26,4 +26,21 @@ class PostRepositoryImpl implements PostRepository {
     final DataState<PostModel> result = await _api.getDetailPost(id: id);
     return result.map((PostModel model) => model.toEntity());
   }
+
+  @override
+  Future<List<Post>> findPostsByName({
+    required List<Post> listPost,
+    required String name,
+  }) async {
+    final String q = name.trim().toLowerCase();
+    if (q.isEmpty) return listPost;
+
+    final filtered = listPost.where(
+      (p) => p.title.trim().toLowerCase().startsWith(q),
+    );
+
+    final List<Post> result = filtered.toList()
+      ..sort((a, b) => a.title.compareTo(b.title));
+    return result;
+  }
 }

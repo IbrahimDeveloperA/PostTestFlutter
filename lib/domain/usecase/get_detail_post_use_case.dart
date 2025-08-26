@@ -7,8 +7,9 @@ import '../repository/post_repository.dart';
 
 @lazySingleton
 class GetDetailPostUseCase implements UseCase<DataState<Post>, int> {
-  final PostRepository _repo;
   GetDetailPostUseCase(this._repo);
+
+  final PostRepository _repo;
 
   @override
   Future<DataState<Post>> call({int? params}) {

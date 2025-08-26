@@ -16,4 +16,12 @@ final class LoadPostsListEvent extends PostsListEvent {
   List<Object?> get props => [completer];
 }
 
+final class SearchPostsListEvent extends PostsListEvent {
+  const SearchPostsListEvent(this.query, {this.completer});
 
+  final String query;
+  final Completer? completer;
+
+  @override
+  List<Object?> get props => [query, completer];
+}

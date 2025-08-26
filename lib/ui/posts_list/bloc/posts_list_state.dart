@@ -19,10 +19,19 @@ final class LoadedPostsListState extends PostsListState {
 }
 
 final class ErrorPostsListState extends PostsListState {
-  const ErrorPostsListState({ this.error});
+  const ErrorPostsListState({this.error});
 
   final DioException? error;
 
   @override
   List<Object?> get props => [error];
+}
+
+final class EmptyPostsListState extends PostsListState {
+  const EmptyPostsListState({required this.message});
+
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
 }
