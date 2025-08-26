@@ -8,8 +8,6 @@ import 'package:test_flutter/domain/models/post.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../../core/resources/data_state.dart';
-import '../../../domain/params/find_post_by_name_params.dart';
-import '../../../domain/usecase/find_post_by_name_use_case.dart';
 import '../../../domain/usecase/get_posts_use_case.dart';
 
 part 'posts_list_event.dart';
@@ -20,14 +18,12 @@ part 'posts_list_state.dart';
 class PostsListBloc extends Bloc<PostsListEvent, PostsListState> {
   PostsListBloc(
     this._getPostsUseCase,
-    this._findPostByNameUseCase,
   ) : super(LoadingPostsListState()) {
     on<LoadPostsListEvent>(_loadPosts);
     on<SearchPostsListEvent>(_searchPosts);
   }
 
   final GetPostsUseCase _getPostsUseCase;
-  final FindPostByNameUseCase _findPostByNameUseCase;
 
   List<Post> _allPosts = [];
 
@@ -58,23 +54,20 @@ class PostsListBloc extends Bloc<PostsListEvent, PostsListState> {
     SearchPostsListEvent event,
     Emitter<PostsListState> emit,
   ) async {
-    try{
+    try {
       if (_allPosts.isEmpty) return;
 
-      final List<Post> filtered = await _findPostByNameUseCase(
-        params: FindPostByNameParams(
-          listPost: _allPosts,
-          query: event.query,
-        ),
-      );
+      final List<Post> filtered = _allPosts
+          .where((p) => p.title.trim().toLowerCase().startsWith(event.query))
+          .toList();
       if (filtered.isEmpty) {
-        return emit(EmptyPostsListState(message: AppConstants.messageEmptyList));
+        return emit(
+            EmptyPostsListState(message: AppConstants.messageEmptyList));
       }
 
       emit(LoadedPostsListState(post: filtered));
-    }finally{
+    } finally {
       event.completer?.complete();
     }
-
   }
 }

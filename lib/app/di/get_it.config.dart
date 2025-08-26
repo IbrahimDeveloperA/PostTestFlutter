@@ -19,8 +19,6 @@ import 'package:test_flutter/data/remote/post_api_service.dart' as _i338;
 import 'package:test_flutter/data/repository/post_repository_impl.dart'
     as _i307;
 import 'package:test_flutter/domain/repository/post_repository.dart' as _i767;
-import 'package:test_flutter/domain/usecase/find_post_by_name_use_case.dart'
-    as _i773;
 import 'package:test_flutter/domain/usecase/get_detail_post_use_case.dart'
     as _i659;
 import 'package:test_flutter/domain/usecase/get_posts_use_case.dart' as _i482;
@@ -51,14 +49,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i482.GetPostsUseCase(gh<_i767.PostRepository>()));
     gh.lazySingleton<_i659.GetDetailPostUseCase>(
         () => _i659.GetDetailPostUseCase(gh<_i767.PostRepository>()));
-    gh.lazySingleton<_i773.FindPostByNameUseCase>(
-        () => _i773.FindPostByNameUseCase(gh<_i767.PostRepository>()));
+    gh.factory<_i545.PostsListBloc>(
+        () => _i545.PostsListBloc(gh<_i482.GetPostsUseCase>()));
     gh.factory<_i431.DetailPostBloc>(
         () => _i431.DetailPostBloc(gh<_i659.GetDetailPostUseCase>()));
-    gh.factory<_i545.PostsListBloc>(() => _i545.PostsListBloc(
-          gh<_i482.GetPostsUseCase>(),
-          gh<_i773.FindPostByNameUseCase>(),
-        ));
     return this;
   }
 }
