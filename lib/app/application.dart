@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:test_flutter/router/app_router.dart';
+import 'package:test_flutter/ui/posts_list/cubit/theme_cubit.dart';
+
+import 'di/get_it.dart';
 
 class Application extends StatelessWidget {
   Application({super.key});
@@ -10,13 +14,23 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _appRouter.config(
-        navigatorObservers: () => [
-          TalkerRouteObserver(
-            GetIt.I<Talker>(),
-          )
-        ],
+    return BlocProvider(
+      create: (BuildContext context) => getIt<ThemeCubit>(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            themeMode: state.getTheme ? ThemeMode.dark : ThemeMode.light,
+            routerConfig: _appRouter.config(
+              navigatorObservers: () => [
+                TalkerRouteObserver(
+                  GetIt.I<Talker>(),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }

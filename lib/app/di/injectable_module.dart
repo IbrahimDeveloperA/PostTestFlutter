@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 import 'package:talker_flutter/talker_flutter.dart';
@@ -9,15 +10,18 @@ import 'get_it.dart';
 
 @module
 abstract class InjectableModule {
+  @preResolve
+  @lazySingleton
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
   @lazySingleton
   Talker talker() => TalkerFlutter.init(
-    settings: TalkerSettings(
-      maxHistoryItems: 30,
-      titles: {TalkerLogType.exception.toString(): 'Error: '},
-      enabled: true,
-    ),
-  );
+        settings: TalkerSettings(
+          maxHistoryItems: 30,
+          titles: {TalkerLogType.exception.toString(): 'Error: '},
+          enabled: true,
+        ),
+      );
 
   @lazySingleton
   TalkerDioLogger talkerDioLogger() {
@@ -36,7 +40,9 @@ abstract class InjectableModule {
   @lazySingleton
   Dio dio() {
     final Dio dio = Dio(
-      BaseOptions(baseUrl: AppConstants.baseUrl,followRedirects: true,
+      BaseOptions(
+        baseUrl: AppConstants.baseUrl,
+        followRedirects: true,
         headers: {
           "Content-Type": "application/json",
         },
@@ -47,5 +53,4 @@ abstract class InjectableModule {
     dio.interceptors.add(talkerDioLogger);
     return dio;
   }
-
 }
