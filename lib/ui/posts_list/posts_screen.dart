@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_flutter/domain/models/post.dart';
 import 'package:test_flutter/router/app_router.gr.dart';
-import 'package:test_flutter/ui/posts_list/cubit/theme_cubit.dart';
 import 'package:test_flutter/ui/posts_list/widgets/post_card.dart';
 
 import '../../app/di/get_it.dart';
@@ -46,22 +45,15 @@ class _PostsListScreenState extends State<PostsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeCubit themeCubit = context.watch<ThemeCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Записи'),
         actions: [
-          Row(
-            children: [
-              Text('Dark'),
-              Switch(
-                value: themeCubit.state.getTheme,
-                onChanged: (bool value) {
-                  themeCubit.changeTheme(value);
-                },
-              ),
-            ],
-          )
+          IconButton(
+              onPressed: () {
+                context.router.push(SettingRoute());
+              },
+              icon: Icon(Icons.settings))
         ],
       ),
       body: RefreshIndicator(

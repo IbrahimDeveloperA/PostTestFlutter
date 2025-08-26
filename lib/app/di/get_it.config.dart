@@ -33,7 +33,7 @@ import 'package:test_flutter/domain/usecase/get_posts_use_case.dart' as _i482;
 import 'package:test_flutter/domain/usecase/get_theme_use_case.dart' as _i978;
 import 'package:test_flutter/ui/detail/bloc/detail_post_bloc.dart' as _i431;
 import 'package:test_flutter/ui/posts_list/bloc/posts_list_bloc.dart' as _i545;
-import 'package:test_flutter/ui/posts_list/cubit/theme_cubit.dart' as _i475;
+import 'package:test_flutter/ui/setting/cubit/theme_cubit.dart' as _i692;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -75,7 +75,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i889.ChangeThemeUseCase(gh<_i533.SettingsRepository>()));
     gh.lazySingleton<_i978.GetThemeUseCase>(
         () => _i978.GetThemeUseCase(gh<_i533.SettingsRepository>()));
-    gh.factory<_i475.ThemeCubit>(() => _i475.ThemeCubit(
+    gh.factory<_i692.ThemeCubit>(() => _i692.ThemeCubit(
           gh<_i978.GetThemeUseCase>(),
           gh<_i889.ChangeThemeUseCase>(),
         ));

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:test_flutter/router/app_router.dart';
-import 'package:test_flutter/ui/posts_list/cubit/theme_cubit.dart';
 
+import '../ui/setting/cubit/theme_cubit.dart';
 import 'di/get_it.dart';
 
 class Application extends StatelessWidget {
