@@ -13,6 +13,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+
   @override
   Widget build(BuildContext context) {
     final ThemeCubit themeCubit = context.watch<ThemeCubit>();
