@@ -1,7 +1,3 @@
-import 'package:dio/dio.dart';
-
-import '../../app/di/get_it.dart';
-
 class AppConstants {
   static const String baseUrl = "https://jsonplaceholder.typicode.com/";
 
